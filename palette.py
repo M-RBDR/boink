@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 
 import pygame
-from pygame.sprite import Sprite
 
-class Palette(Sprite):
+class Palette():
     """Une classe pour gérer les palettes des joeurs."""
 
 
     def __init__(self, jeu, position):
         """Initialiser la palette et l'associer au jeu."""
-        super().__init__()
         # Associer les attributs du jeu à la palette
         self.ecran = jeu.ecran
         self.ecran_rect = jeu.ecran.get_rect()
