@@ -35,7 +35,8 @@ class Palette():
     def mise_a_jour(self, delta_temps):
         """Mettre à jour la position de la pallete
         selon la direction du mouvement."""
-        # S'assurer que la palette reste dans l'espace de jeu
+        # S'assurer que la palette reste dans l'espace de jeu et
+        # que son mouvement soit en fonction du delta temps
         if self.mouvement_haut and (self.rect.top > self.ecran_rect.top):
             self.rect.y -= self.parametres.vitesse_palette * delta_temps
         if self.mouvement_bas and (self.rect.bottom < self.ecran_rect.bottom):

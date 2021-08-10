@@ -22,8 +22,10 @@ class Jeu:
                                               self.parametres.ecran_hauteur))
         pygame.display.set_caption("Boink!")
 
+        # Mettre en place une horloge pour calculer le FPS plus tard
         self.horloge = pygame.time.Clock()
 
+        # Initialiser les acteurs du jeu
         self.palettes = [Palette(self, 'gauche'), Palette(self, 'droite')]
         self.balle = Balle(self)
 
@@ -59,7 +61,7 @@ class Jeu:
 
 
     def _mise_a_jour_acteurs(self, delta_temps):
-        """Mettre à jour les acteurs du jeu."""
+        """Mettre à jour les acteurs du jeu en fonction du delta temps."""
         for palette in self.palettes:
                 palette.mise_a_jour(delta_temps)
 
@@ -82,6 +84,7 @@ class Jeu:
     def lancer_jeu(self):
         """Lancer la boucle du jeu."""
         while True:
+            # S'assurer que la boucle de jeu ne va pas plus vite que 60 FPS
             delta_temps = self.horloge.tick(60) / 1000.0
             self._gerer_evenements()
             self._mise_a_jour_acteurs(delta_temps)

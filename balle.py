@@ -39,7 +39,7 @@ class Balle:
             self.direction_y = -self.direction_y
 
         # Faire bondire dans le sens opposé la balle
-        # lorsqu'elle entre en contacte avec une palette
+        # lorsqu'elle entre en collision avec une palette
         for palette in self.palettes:
             if pygame.Rect.colliderect(palette.rect, self.rect):
                 if palette.rect.center > self.ecran_rect.center:
@@ -48,7 +48,7 @@ class Balle:
                     self.rect.left = palette.rect.right
                 self.direction_x = -self.direction_x
 
-        # Mouvement de la balle
+        # Mouvement de la balle en fonction du delta temps
         self.rect.x += self.direction_x * self.parametres.vitesse_balle * delta_temps
         self.rect.y += self.direction_y * self.parametres.vitesse_balle * delta_temps
 
