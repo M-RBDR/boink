@@ -15,3 +15,10 @@ class Parametres:
         self.palette_largeur = 20
         self.palette_hauteur = 80
         self.couleur_palette = (200, 200, 100)
+        self.vitesse_palette = 300
+
+        # Paramètres de la balle
+        self.balle_largeur = 10
+        self.balle_hauteur = 10
+        self.couleur_balle = (200, 200, 100)
+        self.vitesse_balle = 200

@@ -6,6 +6,7 @@ import pygame
 
 from parametres import Parametres
 from palette import Palette
+from balle import Balle
 
 class Jeu:
     """Une classe pour initialiser les attributs du jeu et gérer le jeu"""
@@ -21,7 +22,10 @@ class Jeu:
                                               self.parametres.ecran_hauteur))
         pygame.display.set_caption("Boink!")
 
+        self.horloge = pygame.time.Clock()
+
         self.palettes = [Palette(self, 'gauche'), Palette(self, 'droite')]
+        self.balle = Balle(self)
 
 
     def _gerer_evenements(self):
@@ -54,10 +58,12 @@ class Jeu:
                     self.palettes[1].mouvement_bas = False
 
 
-    def _mise_a_jour_acteurs(self):
+    def _mise_a_jour_acteurs(self, delta_temps):
         """Mettre à jour les acteurs du jeu."""
         for palette in self.palettes:
-                palette.mise_a_jour()
+                palette.mise_a_jour(delta_temps)
+
+        self.balle.mise_a_jour(delta_temps)
 
 
     def _mise_a_jour_ecran(self):
@@ -66,7 +72,9 @@ class Jeu:
 
         # Afficher les acteurs
         for palette in self.palettes:
-            palette.afficher_palette()
+            palette.afficher()
+
+        self.balle.afficher()
 
         pygame.display.flip()
 
@@ -74,8 +82,9 @@ class Jeu:
     def lancer_jeu(self):
         """Lancer la boucle du jeu."""
         while True:
+            delta_temps = self.horloge.tick(60) / 1000.0
             self._gerer_evenements()
-            self._mise_a_jour_acteurs()
+            self._mise_a_jour_acteurs(delta_temps)
             self._mise_a_jour_ecran()
 
 

@@ -22,7 +22,7 @@ class Palette():
         self.rect = pygame.Rect(0, 0, self.parametres.palette_largeur,
                                 self.parametres.palette_hauteur)
 
-        # Initialiser la position initiale de la palette à gauche ou à droite
+        # Initialiser la position de la palette à gauche ou à droite
         # de l'écran selon le paramètre position
         if position == 'gauche':
             self.rect.midleft = self.ecran_rect.midleft
@@ -32,16 +32,16 @@ class Palette():
             self.rect.x -= self.parametres.palette_largeur
 
 
-    def mise_a_jour(self):
+    def mise_a_jour(self, delta_temps):
         """Mettre à jour la position de la pallete
         selon la direction du mouvement."""
         # S'assurer que la palette reste dans l'espace de jeu
         if self.mouvement_haut and (self.rect.top > self.ecran_rect.top):
-            self.rect.y -= 1
+            self.rect.y -= self.parametres.vitesse_palette * delta_temps
         if self.mouvement_bas and (self.rect.bottom < self.ecran_rect.bottom):
-            self.rect.y += 1
+            self.rect.y += self.parametres.vitesse_palette * delta_temps
 
 
-    def afficher_palette(self):
+    def afficher(self):
         """Afficher la palette à l'écran."""
         pygame.draw.rect(self.ecran, self.couleur, self.rect)
