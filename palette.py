@@ -37,9 +37,9 @@ class Palette(Sprite):
 
     def mise_a_jour(self):
         """Mettre à jour la position de la pallete selon la direction du mouvement"""
-        if self.mouvement_haut:
+        if self.mouvement_haut and (self.rect.top > self.ecran_rect.top):
             self.rect.y -= 1
-        if self.mouvement_bas:
+        if self.mouvement_bas and (self.rect.bottom < self.ecran_rect.bottom):
             self.rect.y += 1
 
 
