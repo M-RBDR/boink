@@ -21,36 +21,50 @@ class Jeu:
                                               self.parametres.ecran_hauteur))
         pygame.display.set_caption("Boink!")
 
-        self.palettes = []
-        self.palettes.append(Palette(self, 'gauche'))
-        self.palettes.append(Palette(self, 'droite'))
-
-        self.palettes_affichage = pygame.sprite.Group()
-        self.palettes_affichage.add(self.palettes[0])
-        self.palettes_affichage.add(self.palettes[1])
+        self.palettes = [Palette(self, 'gauche'), Palette(self, 'droite')]
 
 
     def _gerer_evenements(self):
         """Gérer les évènements du module pygame"""
         for event in pygame.event.get():
+            # Vérifier si l'utilisateur veut quitter
             if event.type == pygame.QUIT:
                 sys.exit()
+            # Vérifier si une touche a été appuyée pour avoir
+            # du mouvement
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_w:
                     self.palettes[0].mouvement_haut = True
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_s:
                     self.palettes[0].mouvement_bas = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
-                    self.palettes[0].mouvement_haut = False
+                elif event.key == pygame.K_UP:
+                    self.palettes[1].mouvement_haut = True
                 elif event.key == pygame.K_DOWN:
+                    self.palettes[1].mouvement_bas = True
+            # Vérifier si une touche a été relâchée pour avoir
+            # du mouvement continu
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_w:
+                    self.palettes[0].mouvement_haut = False
+                elif event.key == pygame.K_s:
                     self.palettes[0].mouvement_bas = False
+                elif event.key == pygame.K_UP:
+                    self.palettes[1].mouvement_haut = False
+                elif event.key == pygame.K_DOWN:
+                    self.palettes[1].mouvement_bas = False
+
+
+    def _mise_a_jour_acteurs(self):
+        """Mettre à jour les acteurs du jeu."""
+        for palette in self.palettes:
+                palette.mise_a_jour()
 
 
     def _mise_a_jour_ecran(self):
-        """Mettre à jour l'affichage et le présenter à l'utilisateur"""
+        """Mettre à jour l'affichage et le présenter à l'utilisateur."""
         self.ecran.fill(self.parametres.couleur_fond)
 
+        # Afficher les acteurs
         for palette in self.palettes:
             palette.afficher_palette()
 
@@ -58,12 +72,12 @@ class Jeu:
 
 
     def lancer_jeu(self):
-        """lancer la boucle du jeu"""
+        """Lancer la boucle du jeu."""
         while True:
             self._gerer_evenements()
-            for palette in self.palettes_affichage.sprites():
-                palette.mise_a_jour()
+            self._mise_a_jour_acteurs()
             self._mise_a_jour_ecran()
+
 
 if __name__ == '__main__':
     jeu = Jeu()
